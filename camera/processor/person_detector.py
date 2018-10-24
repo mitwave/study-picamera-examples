@@ -28,7 +28,8 @@ def upload():
         'token': SLACK_TOKEN,
         'channels': [SLACK_CHANNEL],
     }
-    requests.post(SLACK_URL, params=payload, files=image)
+    r = requests.post(SLACK_URL, params=payload, files=image)
+    print(r.status_code)
 
 
 class PersonDetector(object):
@@ -79,7 +80,7 @@ class PersonDetector(object):
             count += 1
         
         if count > 0:
-            print('Count: {}'.format(count))
+            # print('Count: {}'.format(count))
             elapsed = time.time() - self.last_upload
             if elapsed > 60:
                 cv2.imwrite('hello.jpg', frame)
