@@ -6,6 +6,10 @@ import time
 import numpy as np
 import cv2
 
+import os
+import sys
+import requests
+
 
 net = cv2.dnn.readNetFromCaffe('/home/pi/models/MobileNetSSD_deploy.prototxt',
         '/home/pi/models/MobileNetSSD_deploy.caffemodel')
@@ -61,3 +65,12 @@ class PersonDetector(object):
             print('Count: {}'.format(count))
                 
         return frame
+        
+    def upload():
+        image = { 'file': open('hello.jpg', 'rb') }
+        payload = {
+            'filename': 'hello.jpg',
+            'token': SLACK_TOKEN,
+            'channels': [SLACK_CHANNEL],
+        }
+        requests.post(SLACK_URL, params=payload, files=image)
